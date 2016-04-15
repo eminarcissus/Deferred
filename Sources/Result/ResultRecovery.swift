@@ -7,13 +7,9 @@
 //
 
 extension ResultType {
-    /// Derive a Result from a failable function.
-    public init(@noescape with body: () throws -> Value) {
-        do {
-            try self.init(value: body())
-        } catch {
-            self.init(error: error)
-        }
+    /// Creates a result with a successful `value`.
+    public init(@autoclosure value getValue: () throws -> Value) {
+        self.init { try getValue() }
     }
 
     /// Returns the success value or throws the error.

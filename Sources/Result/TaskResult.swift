@@ -16,8 +16,12 @@ public enum TaskResult<Value> {
 
 extension TaskResult: ResultType {
     /// Creates a result with a successful `value`.
-    public init(value: Value) {
-        self = .Success(value)
+    public init(@noescape with body: () throws -> Value) {
+        do {
+            self = try .Success(body())
+        } catch {
+            self = .Failure(error)
+        }
     }
 
     /// Creates a failed result with `error`.

@@ -11,8 +11,8 @@
 public protocol ResultType: CustomStringConvertible, CustomDebugStringConvertible {
     associatedtype Value
 
-    /// Creates a result with a successful `value`.
-    init(value: Value)
+    /// Derive a result from a failable function.
+    init(@noescape with body: () throws -> Value)
 
     /// Creates a failed result with `error`.
     init(error: ErrorType)
